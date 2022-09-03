@@ -1,21 +1,24 @@
 {
-  "name": "react-native-hexgrid2",
-  "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+  "name": "react-native-hexgrid",
+  "description": "A React-Native port of react-hexgrid",
+  "version": "0.1.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "files": [
+    "src"
+  ],
+  "homepage": "https://github.com/henrybzhang/react-native-hexgrid#readme",
+  "author": "henrybzhang",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.59"
   },
   "dependencies": {
-    "expo": "~46.0.9",
-    "expo-status-bar": "~1.4.0",
-    "react": "18.0.0",
-    "react-native": "0.69.5"
+    "react-native-svg": "12.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
-  },
-  "private": true
+    "@types/react": "~18.0.0",
+    "@types/react-native": "~0.69.1",
+    "typescript": "^4.6.3"
+  }
 }

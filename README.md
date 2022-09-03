@@ -1,0 +1,1 @@
+This library was ported from [here](https://github.com/Hellenic/react-hexgrid)
