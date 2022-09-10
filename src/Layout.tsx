@@ -1,20 +1,20 @@
-import * as React from "react"
-import { Orientation } from "./models/Orientation"
-import { Point } from "./models/Point"
-import { G } from "react-native-svg"
+import * as React from 'react';
+import { Orientation } from './models/Orientation';
+import { Point } from './models/Point';
+import { G } from 'react-native-svg';
 
-export type Size = { x: number; y: number }
+export type Size = { x: number; y: number };
 
 export type LayoutDimension = {
-  size: Size
-  orientation: Orientation
-  origin: Size
-  spacing: number
-}
+  size: Size;
+  orientation: Orientation;
+  origin: Size;
+  spacing: number;
+};
 export type LayoutContextProps = {
-  layout: LayoutDimension
-  points: string
-}
+  layout: LayoutDimension;
+  points: string;
+};
 
 const LAYOUT_FLAT = new Orientation(
   3.0 / 2.0,
@@ -25,8 +25,8 @@ const LAYOUT_FLAT = new Orientation(
   0.0,
   -1.0 / 3.0,
   Math.sqrt(3.0) / 3.0,
-  0.0,
-)
+  0.0
+);
 const LAYOUT_POINTY = new Orientation(
   Math.sqrt(3.0),
   Math.sqrt(3.0) / 2.0,
@@ -36,11 +36,11 @@ const LAYOUT_POINTY = new Orientation(
   -1.0 / 3.0,
   0.0,
   2.0 / 3.0,
-  0.5,
-)
-const defaultSize = new Point(10, 10)
-const defaultOrigin = new Point(0, 0)
-const defaultSpacing = 1.0
+  0.5
+);
+const defaultSize = new Point(10, 10);
+const defaultOrigin = new Point(0, 0);
+const defaultSpacing = 1.0;
 
 const Context = React.createContext<LayoutContextProps>({
   layout: {
@@ -49,12 +49,12 @@ const Context = React.createContext<LayoutContextProps>({
     origin: defaultOrigin,
     spacing: defaultSpacing,
   },
-  points: "",
-})
+  points: '',
+});
 
 export function useLayoutContext() {
-  const ctx = React.useContext(Context)
-  return ctx
+  const ctx = React.useContext(Context);
+  return ctx;
 }
 
 /**
@@ -68,18 +68,18 @@ export function useLayoutContext() {
 function calculateCoordinates(
   circumradius: number,
   angle: number = 0,
-  center: Point = new Point(0, 0),
+  center: Point = new Point(0, 0)
 ) {
-  const corners: Point[] = []
+  const corners: Point[] = [];
 
   for (let i = 0; i < 6; i++) {
-    const x = circumradius * Math.cos((2 * Math.PI * i) / 6 + angle)
-    const y = circumradius * Math.sin((2 * Math.PI * i) / 6 + angle)
-    const point = new Point(center.x + x, center.y + y)
-    corners.push(point)
+    const x = circumradius * Math.cos((2 * Math.PI * i) / 6 + angle);
+    const y = circumradius * Math.sin((2 * Math.PI * i) / 6 + angle);
+    const point = new Point(center.x + x, center.y + y);
+    corners.push(point);
   }
 
-  return corners
+  return corners;
 }
 
 export type LayoutProps = {
@@ -87,15 +87,15 @@ export type LayoutProps = {
     | React.ReactElement
     | React.ReactElement[]
     | JSX.Element
-    | JSX.Element[]
-  className?: string
-  flat?: boolean
-  origin?: any
+    | JSX.Element[];
+  className?: string;
+  flat?: boolean;
+  origin?: any;
   /* defines scale */
-  size?: Size
-  space?: number
-  spacing?: number
-}
+  size?: Size;
+  space?: number;
+  spacing?: number;
+};
 
 /**
  * Provides LayoutContext for all descendands and renders child elements inside a <g> (Group) element
@@ -106,19 +106,18 @@ export function Layout({
   spacing = defaultSpacing,
   origin = defaultOrigin,
   children,
-  className,
   ...rest
 }: LayoutProps) {
-  const orientation = flat ? LAYOUT_FLAT : LAYOUT_POINTY
-  const angle = flat ? 0 : Math.PI / 6
-  const cornerCoords = calculateCoordinates(size.x, angle)
-  const points = cornerCoords.map((point) => `${point.x},${point.y}`).join(" ")
+  const orientation = flat ? LAYOUT_FLAT : LAYOUT_POINTY;
+  const angle = flat ? 0 : Math.PI / 6;
+  const cornerCoords = calculateCoordinates(size.x, angle);
+  const points = cornerCoords.map((point) => `${point.x},${point.y}`).join(' ');
   const childLayout = Object.assign({}, rest, {
     orientation,
     size,
     origin,
     spacing,
-  })
+  });
 
   return (
     <Context.Provider
@@ -127,9 +126,9 @@ export function Layout({
         points,
       }}
     >
-      <G className={className}>{children}</G>
+      <G>{children}</G>
     </Context.Provider>
-  )
+  );
 }
 
-export default Layout
+export default Layout;

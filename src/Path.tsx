@@ -1,46 +1,46 @@
-import * as React from "react"
-import { Path as SVGPath, PathProps as SVGPathProps } from "react-native-svg"
-import { HexUtils } from "./HexUtils"
-import { useLayoutContext } from "./Layout"
-import { Hex } from "./models/Hex"
+import * as React from 'react';
+import { Path as SVGPath, PathProps as SVGPathProps } from 'react-native-svg';
+import { HexUtils } from './HexUtils';
+import { useLayoutContext } from './Layout';
+import { Hex } from './models/Hex';
 
 export type PathProps = {
-  start: any
-  end?: any
-} & Omit<SVGPathProps, "start" | "end">
+  start: any;
+  end?: any;
+} & Omit<SVGPathProps, 'start' | 'end'>;
 
 /**
  * Renders an svg `<path>` component with points on the grid between a qrs-based `start` and `end` coordinates.
  */
 export function Path({ start, end, ...props }: PathProps) {
-  const { layout } = useLayoutContext()
+  const { layout } = useLayoutContext();
   // TODO Refactor
   function getPoints() {
     if (!start || !end) {
-      return ""
+      return '';
     }
 
     // Get all the intersecting hexes between start and end points
-    let distance = HexUtils.distance(start, end)
-    let intersects: Hex[] = []
-    let step = 1.0 / Math.max(distance, 1)
+    let distance = HexUtils.distance(start, end);
+    let intersects: Hex[] = [];
+    let step = 1.0 / Math.max(distance, 1);
     for (let i = 0; i <= distance; i++) {
-      intersects.push(HexUtils.round(HexUtils.hexLerp(start, end, step * i)))
+      intersects.push(HexUtils.round(HexUtils.hexLerp(start, end, step * i)));
     }
 
     // Construct Path points out of all the intersecting hexes (e.g. M 0,0 L 10,20, L 30,20)
-    let points = "M"
+    let points = 'M';
     points += intersects
       .map((hex) => {
-        let p = HexUtils.hexToPixel(hex, layout)
-        return ` ${p.x},${p.y} `
+        let p = HexUtils.hexToPercentage(hex, layout);
+        return ` ${p.x},${p.y} `;
       })
-      .join("L")
+      .join('L');
 
-    return points
+    return points;
   }
 
-  return <SVGPath {...props} d={getPoints()}></SVGPath>
+  return <SVGPath {...props} d={getPoints()}></SVGPath>;
 }
 
-export default Path
+export default Path;

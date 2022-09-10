@@ -21,4 +21,5 @@ export function HexGrid({
 }: Props) {
   return <Svg width={width} height={height} viewBox={viewBox} {...props} />;
 }
+
 export default HexGrid;

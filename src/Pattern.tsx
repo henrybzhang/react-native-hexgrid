@@ -1,13 +1,13 @@
-import Point from "./models/Point"
-import { Defs, Pattern as SVGPattern, Image } from "react-native-svg"
-import { Size } from "./Layout"
+import Point from './models/Point';
+import { Defs, Pattern as SVGPattern, Image } from 'react-native-svg';
+import { Size } from './Layout';
 
 export type PatternProps = {
-  id: string
-  link: string
-  size?: Size
-}
-const defaultSize = new Point(10, 10)
+  id: string;
+  link: string;
+  size?: Size;
+};
+const defaultSize = new Point(10, 10);
 
 /**
  * Defines an `<defs><pattern><image>` group (will not be rendered) in order to allow defining images.
@@ -33,7 +33,7 @@ export function Pattern({ id, link, size = defaultSize }: PatternProps) {
         />
       </SVGPattern>
     </Defs>
-  )
+  );
 }
 
-export default Pattern
+export default Pattern;
