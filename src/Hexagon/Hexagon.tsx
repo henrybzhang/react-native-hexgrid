@@ -26,21 +26,18 @@ export function Hexagon(props: HexagonProps & GProps) {
 
   const { hex, pixel } = React.useMemo(() => {
     const hex = new Hex(q, r, s);
-    const pixel = HexUtils.hexToPixel(hex, layout);
+    const pixel = HexUtils.hexToPercentage(hex, layout);
     return {
       hex,
       pixel,
     };
   }, [q, r, s, layout]);
 
-  const fillId = fill ? `url(#${fill})` : undefined;
   const draggable = { draggable: true } as any;
   return (
     <G transform={`translate(${pixel.x}, ${pixel.y})`} {...rest} {...draggable}>
-      <G>
-        <Polygon points={points} fill={fillId} />
-        {children}
-      </G>
+      <Polygon points={points} fill={fill} />
+      {children}
     </G>
   );
 }
